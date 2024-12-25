@@ -1,0 +1,116 @@
+/*================================================================================
+	Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
+	Version: 2.0
+	Author: PIXINVENT
+	Author URL: http://www.themeforest.net/user/pixinvent
+================================================================================
+
+NOTE:
+------
+PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
+WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+
+.loaderbody {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background-color: white;
+    z-index: 1039;
+    overflow: hidden;
+}
+
+/* .loader {
+	background-image: url("../../app-assets/images/logo/logo-icon.png");
+	background-size: 150px;
+	background-position: center;
+	background-repeat: no-repeat;
+	width: 150px;
+	height: 150px;
+	margin: auto;
+	position: fixed;
+	z-index: 1040;
+	left: 45%;
+	top: 45%;
+
+} */
+
+.loader {
+    background-size: 140px;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height: 100%;
+    z-index: 1040;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    background-image: url("assets/img/logo.png");
+}
+
+.mainlogoarea {
+    width: 90%;
+}
+
+.mainlogoimage {
+    height: 36px;
+}
+
+.mainlogotext {
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mainlogocollpasearea{
+	width: 10%;
+}
+
+.success-border-lead{
+    border-color: green !important;
+    border-left-style: dotted !important;
+}
+
+/* table.dataTable td {
+    padding: 0.00rem 0.5rem;
+}
+
+.srno {
+    padding-left: 1.5rem !important;
+}
+
+tbody {
+    font-size: 15px;
+    font-weight: 600;
+} */
+
+table.dataTable>thead .sorting:before,
+table.dataTable>thead .sorting_asc:before {
+    content: '';
+}
+
+table.dataTable>thead .sorting:after,
+table.dataTable>thead .sorting_asc:after {
+    content: '';
+}
+
+.buttons-columnVisibility {
+    width: 80%;
+    color: black;
+    background: #fbb21b;
+}
+
+.buttons-columnVisibility.active {
+    width: 80%;
+    color: white;
+    background: #1f2358;
+}
+
+tbody {
+    font-size: 14px;
+}
+
+.btntbl tr td {
+    padding: 0 0.5rem !important;
+}
