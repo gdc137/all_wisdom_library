@@ -13,8 +13,6 @@ return new class extends Migration
     {
         Schema::create('scriptures', function (Blueprint $table) {
             $table->id();
-            $table->integer('land_id')->index();
-            $table->integer('ref_id')->index()->nullable();
             $table->string('title', 500);
             $table->text('description')->nullable();
             $table->string('image', 200)->nullable();

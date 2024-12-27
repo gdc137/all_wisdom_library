@@ -46,7 +46,7 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
     top: 50%;
     left: 50%;
     translate: -50% -50%;
-    background-image: url("assets/img/logo.png");
+    background-image: url("../../app-assets/images/logo/icon.png");
 }
 
 .mainlogoarea {

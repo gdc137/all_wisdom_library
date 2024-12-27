@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Slock extends Model
 {
     use HasFactory;
+
+    protected $attributes = [
+        'active_status' => 1,
+    ];
 }

@@ -7,87 +7,6 @@
 @endsection
 
 @section('content')
-<!-- Content Header (Page header) -->
-{{-- <section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Dashboard</h1>
-            </div>
-        </div>
-    </div><!-- /.container-fluid -->
-</section>
-
-<section class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-3 col-6">
-                <!-- small box -->
-                <div class="small-box bg-info">
-                    <div class="inner">
-                        <h3>{{ $data['users'] }}</h3>
-
-                        <p>Active Users</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <a href="{{ route('users') }}" class="small-box-footer"><i
-                            class="fas fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-                <!-- small box -->
-                <div class="small-box bg-success">
-                    <div class="inner">
-                        <h3>{{ $data['categories'] }}</h3>
-
-                        <p>Categories</p>
-                    </div>
-                    <div class="icon">
-                        <i class="nav-icon fas fa-bookmark"></i>
-                    </div>
-                    <a href="{{ route('categories') }}" class="small-box-footer"><i
-                            class="fas fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-                <!-- small box -->
-                <div class="small-box bg-warning">
-                    <div class="inner">
-                        <h3>{{ $data['tasks'] }}</h3>
-
-                        <p>Total Tasks</p>
-                    </div>
-                    <div class="icon">
-                        <i class="nav-icon fas fa-align-left"></i>
-                    </div>
-                    <a href="{{ route('tasks') }}" class="small-box-footer"><i
-                            class="fas fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-                <!-- small box -->
-                <div class="small-box bg-danger">
-                    <div class="inner">
-                        <h3>₹ {{ $data['amount'] }}</h3>
-
-                        <p>Total Purchase</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fas fa-rupee-sign"></i>
-                    </div>
-                    <a href="{{ route('transactions') }}" class="small-box-footer"><i
-                            class="fas fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-            <!-- ./col -->
-        </div>
-    </div>
-</section> --}}
 
 <div class="content-header row">
     <div class="content-header-left col-md-9 col-12 mb-2">
@@ -121,7 +40,7 @@
                                 </div>
                             </div>
                             <div class="my-auto">
-                                <h4 class="fw-bolder mb-0">{{ $data['todays_users'] }}</h4>
+                                <h4 class="fw-bolder mb-0"></h4>
                                 <p class="card-text font-small-3 mb-0">Users</p>
                             </div>
                         </div>
@@ -134,7 +53,7 @@
                                 </div>
                             </div>
                             <div class="my-auto">
-                                <h4 class="fw-bolder mb-0">{{ $data['todays_transactions'] }}</h4>
+                                <h4 class="fw-bolder mb-0"></h4>
                                 <p class="card-text font-small-3 mb-0">Transactions</p>
                             </div>
                         </div>
@@ -147,7 +66,7 @@
                                 </div>
                             </div>
                             <div class="my-auto">
-                                <h4 class="fw-bolder mb-0">{{ $data['todays_withdraw'] }}</h4>
+                                <h4 class="fw-bolder mb-0"></h4>
                                 <p class="card-text font-small-3 mb-0">Withdraw Requests</p>
                             </div>
                         </div>
@@ -160,7 +79,7 @@
                                 </div>
                             </div>
                             <div class="my-auto">
-                                <h4 class="fw-bolder mb-0">{{ $data['todays_tests'] }}</h4>
+                                <h4 class="fw-bolder mb-0"></h4>
                                 <p class="card-text font-small-3 mb-0">Tests</p>
                             </div>
                         </div>
@@ -185,7 +104,7 @@
                                 </div>
                             </div>
                             <div class="my-auto">
-                                <h4 class="fw-bolder mb-0">{{ $data['users'] }}</h4>
+                                <h4 class="fw-bolder mb-0"></h4>
                                 <p class="card-text font-small-3 mb-0">Total Users</p>
                             </div>
                         </div>
@@ -198,7 +117,7 @@
                                 </div>
                             </div>
                             <div class="my-auto">
-                                <h4 class="fw-bolder mb-0">{{ $data['active_users'] }}</h4>
+                                <h4 class="fw-bolder mb-0"></h4>
                                 <p class="card-text font-small-3 mb-0">Active Users</p>
                             </div>
                         </div>
@@ -211,7 +130,7 @@
                                 </div>
                             </div>
                             <div class="my-auto">
-                                <h4 class="fw-bolder mb-0">₹ {{ $data['withdraw'] }}</h4>
+                                <h4 class="fw-bolder mb-0">₹ </h4>
                                 <p class="card-text font-small-3 mb-0">Total Withdraw</p>
                             </div>
                         </div>
@@ -224,7 +143,7 @@
                                 </div>
                             </div>
                             <div class="my-auto">
-                                <h4 class="fw-bolder mb-0">₹ {{ $data['purchase'] }}</h4>
+                                <h4 class="fw-bolder mb-0">₹ </h4>
                                 <p class="card-text font-small-3 mb-0">Total Purchase</p>
                             </div>
                         </div>

@@ -13,8 +13,6 @@ return new class extends Migration
     {
         Schema::create('divisions', function (Blueprint $table) {
             $table->id();
-            $table->integer('land_id')->index();
-            $table->integer('ref_id')->index()->nullable();
             $table->integer('scripture_id')->index();
             $table->string('title', 500);
             $table->text('description')->nullable();

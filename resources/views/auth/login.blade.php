@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
     <meta name="robots" content="NOINDEX,NOFOLLOW" />
-    <title>Wisdom Library</title>
+    <title>Wisdom Library | Admin</title>
     <link rel="apple-touch-icon" href="{{ asset('app-assets/images/logo/favicon.png') }}">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('app-assets/images/logo/favicon.png') }}">
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
@@ -89,7 +89,7 @@
                                     <div class="mb-1">
                                         <label class="form-label" for="email">Email</label>
                                         <input class="form-control" id="email" type="email" name="email"
-                                            placeholder="john@example.com" value="{{ old('email') }}"
+                                            placeholder="john@example.com" value="{{ old('email', 'girdharrathod786@gmail.com') }}"
                                             aria-describedby="login-email" autofocus="" tabindex="1" />
                                         <p class="text-danger">{{ $errors->first('email') }}</p>
                                     </div>
@@ -102,6 +102,7 @@
                                         <div class="input-group input-group-merge form-password-toggle">
                                             <input class="form-control form-control-merge" id="password"
                                                 type="password" name="password" placeholder="············"
+                                                value="test123test"
                                                 aria-describedby="password" tabindex="2"
                                                 autocomplete="new-password" /><span
                                                 class="input-group-text cursor-pointer"><i

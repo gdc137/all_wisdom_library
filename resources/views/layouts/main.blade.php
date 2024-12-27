@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
     <meta name="robots" content="NOINDEX,NOFOLLOW" />
 
-    <title>Unispeak | @yield('title', 'Home')</title>
+    <title>Wisdom Library | @yield('title', 'Home')</title>
 
     @include('layouts.head')
     @yield('head')

@@ -56,7 +56,7 @@
                 <!-- Error page-->
                 <div class="misc-wrapper">
                     <a class="brand-logo" href="">
-                        <img src="{{ asset('app-assets/images/logo/logo2.png') }}" alt="Logo" class="ourlogo">
+                        <img src="{{ asset('app-assets/images/logo/logo.png') }}" alt="Logo" class="ourlogo">
                     </a>
                     <div class="misc-inner p-2 p-sm-3">
                         <div class="w-100 text-center">

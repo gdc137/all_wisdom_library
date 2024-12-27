@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('slocks', function (Blueprint $table) {
             $table->id();
             $table->integer('land_id')->index();
-            $table->integer('ref_id')->index()->nullable();
             $table->integer('division_id')->index();
             $table->text('slock', 500);
             $table->text('short_description');
@@ -27,7 +26,6 @@ return new class extends Migration
             $table->text('meta_desc')->nullable();
             $table->text('meta_keywords')->nullable();
             $table->integer('active_status')->default(1)->index();
-            $table->integer('delete_status')->default(0)->index();
             $table->timestamps();
         });
     }

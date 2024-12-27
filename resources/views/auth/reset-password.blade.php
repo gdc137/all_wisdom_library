@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
     <meta name="robots" content="NOINDEX,NOFOLLOW" />
-    <title>Unispeak | Reset Password</title>
+    <title>Wisdom Library | Reset Password</title>
     <link rel="apple-touch-icon" href="{{ asset('app-assets/images/logo/favicon.png') }}">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('app-assets/images/logo/favicon.png') }}">
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
@@ -60,7 +60,7 @@
                     <div class="auth-inner row m-0">
                         <!-- Brand logo-->
                         <a class="brand-logo" href="">
-                            <img src="{{ asset('app-assets/images/logo/logo2.png') }}"
+                            <img src="{{ asset('app-assets/images/logo/logo.png') }}"
                                 alt="Logo" class="ourlogo">
                         </a>
                         <!-- /Brand logo-->

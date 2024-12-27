@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Division extends Model
 {
     use HasFactory;
+
+    protected $attributes = [
+        'active_status' => 1,
+        'delete_status' => 0,
+    ];
 }

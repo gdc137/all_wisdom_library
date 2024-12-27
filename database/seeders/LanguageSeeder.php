@@ -13,8 +13,12 @@ class LanguageSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('languages')->insert([
+        DB::table('languages')->insert([[
             'name' => 'ગુજરાતી',
-        ]);
+        ], [
+            'name' => 'हिन्दी',
+        ], [
+            'name' => 'English',
+        ]]);
     }
 }
