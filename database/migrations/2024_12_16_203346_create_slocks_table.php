@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('slocks', function (Blueprint $table) {
             $table->id();
-            $table->integer('land_id')->index();
+            $table->integer('lang_id')->index();
             $table->integer('division_id')->index();
+            $table->integer('ref_id')->index()->nullable();
             $table->text('slock', 500);
             $table->text('short_description');
             $table->text('description');

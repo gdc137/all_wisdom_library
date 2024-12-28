@@ -28,13 +28,26 @@
                 </a>
             </li>
 
+            <li class="nav-item {{ strpos(Route::currentRouteName(), 'slocks') === 0 ? 'active' : '' }}">
+                <a class="d-flex align-items-center" href="{{ route('slocks') }}">
+                    <i class="fa-solid fa-list"></i>
+                    <span class="menu-title text-truncate" data-i18n="home">Slocks</span>
+                </a>
+            </li>
+
+            <li class="nav-item {{ strpos(Route::currentRouteName(), 'divisions') === 0 ? 'active' : '' }}">
+                <a class="d-flex align-items-center" href="{{ route('divisions') }}">
+                    <i class="fa-solid fa-database"></i>
+                    <span class="menu-title text-truncate" data-i18n="home">Divisions</span>
+                </a>
+            </li>
+
             <li class="nav-item {{ strpos(Route::currentRouteName(), 'scriptures') === 0 ? 'active' : '' }}">
                 <a class="d-flex align-items-center" href="{{ route('scriptures') }}">
                     <i class="fa-solid fa-book"></i>
                     <span class="menu-title text-truncate" data-i18n="home">Scriptures</span>
                 </a>
             </li>
-
             
             <li class="nav-item {{ strpos(Route::currentRouteName(), 'languages') === 0 ? 'active' : '' }}">
                 <a class="d-flex align-items-center" href="{{ route('languages') }}">

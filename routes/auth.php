@@ -10,9 +10,11 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ScriptureController;
+use App\Http\Controllers\SlockController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->prefix('_admin')->group(function () {
@@ -40,7 +42,7 @@ Route::middleware('auth')->prefix('_admin')->group(function () {
     // profile & update password & logout
     Route::get('/change-passowrd', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('password', [PasswordController::class, 'update'])->name('password.update');
-    
+
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
     // Dashboard 
@@ -54,7 +56,7 @@ Route::middleware('auth')->prefix('_admin')->group(function () {
     Route::delete('/languages/{id}/delete', [LanguageController::class, 'delete'])->name('languages.delete');
     Route::post('/languages/change-status', [LanguageController::class, 'changeStatus'])->name('languages.change-status');
 
-    // Languages
+    // scriptures
     Route::get('/scriptures', [ScriptureController::class, 'list'])->name('scriptures');
     Route::post('/scriptures/add', [ScriptureController::class, 'add'])->name('scriptures.add');
     Route::get('/scriptures/{id}/edit', [ScriptureController::class, 'edit'])->name('scriptures.edit');
@@ -62,4 +64,21 @@ Route::middleware('auth')->prefix('_admin')->group(function () {
     Route::delete('/scriptures/{id}/delete', [ScriptureController::class, 'delete'])->name('scriptures.delete');
     Route::post('/scriptures/change-status', [ScriptureController::class, 'changeStatus'])->name('scriptures.change-status');
 
+    // divisions
+    Route::get('/divisions', [DivisionController::class, 'list'])->name('divisions');
+    Route::post('/divisions/add', [DivisionController::class, 'add'])->name('divisions.add');
+    Route::get('/divisions/{id}/edit', [DivisionController::class, 'edit'])->name('divisions.edit');
+    Route::patch('/divisions/{id}/edit', [DivisionController::class, 'edit'])->name('divisions.edit');
+    Route::delete('/divisions/{id}/delete', [DivisionController::class, 'delete'])->name('divisions.delete');
+    Route::post('/divisions/change-status', [DivisionController::class, 'changeStatus'])->name('divisions.change-status');
+    Route::post('/divisions/list', [DivisionController::class, 'ajaxList'])->name('divisions.list');
+
+    // slocks
+    Route::get('/slocks', [SlockController::class, 'list'])->name('slocks');
+    Route::post('/slocks', [SlockController::class, 'list'])->name('slocks');
+    Route::post('/slocks/add', [SlockController::class, 'add'])->name('slocks.add');
+    Route::get('/slocks/{id}/edit', [SlockController::class, 'edit'])->name('slocks.edit');
+    Route::patch('/slocks/{id}/edit', [SlockController::class, 'edit'])->name('slocks.edit');
+    Route::delete('/slocks/{id}/delete', [SlockController::class, 'delete'])->name('slocks.delete');
+    Route::post('/slocks/change-status', [SlockController::class, 'changeStatus'])->name('slocks.change-status');
 });
