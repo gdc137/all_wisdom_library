@@ -11,11 +11,25 @@ use Intervention\Image\Laravel\Facades\Image;
 
 class DivisionController extends Controller
 {
-    public function list()
+    public function list(Request $request)
     {
-        $list = Division::where('delete_status', 0)->orderBy('id', 'DESC')->get()->toArray();
         $scriptures = Scripture::where('delete_status', 0)->where('active_status', 1)->orderBy('id')->get()->toArray();
-        return view('divisions', ['data' => $list, 'scriptures' => $scriptures]);
+
+        if ($request->isMethod('get')) {
+            return view('divisions', ['data' => [], 'scriptures' => $scriptures]);
+        }
+
+        if ($request->isMethod('post')) {
+
+            $list = Division::join('scriptures', 'scriptures.id', 'divisions.scripture_id');
+
+            if ($request->search_scripture_id) {
+                $list->where('divisions.scripture_id', $request->search_scripture_id);
+            }
+            $list = $list->where('divisions.delete_status', 0)->orderBy('divisions.id', 'DESC')->get(['divisions.*', 'scriptures.title as scripture'])->toArray();
+
+            return view('divisions', ['data' => $list, 'scriptures' => $scriptures]);
+        }
     }
 
     public function add(Request $request)
@@ -52,11 +66,10 @@ class DivisionController extends Controller
     public function edit(Request $request, $id)
     {
         if ($request->isMethod('get')) {
-            $list = Division::where('delete_status', 0)->orderBy('id', 'DESC')->get()->toArray();
             $editdata = Division::where('id', $id)->first()->toArray();
             $scriptures = Scripture::where('delete_status', 0)->where('active_status', 1)->orderBy('id')->get()->toArray();
 
-            return view('divisions', ['data' => $list, 'editdata' => $editdata, 'scriptures' => $scriptures]);
+            return view('divisions', ['data' => [], 'editdata' => $editdata, 'scriptures' => $scriptures]);
         }
 
         if ($request->isMethod('patch')) {
@@ -113,7 +126,8 @@ class DivisionController extends Controller
         }
     }
 
-    public function ajaxList(Request $request) {
+    public function ajaxList(Request $request)
+    {
 
         $list = Division::where('scripture_id', $request->scripture_id)->where('delete_status', 0)->where('active_status', 1)->orderBy('id', 'DESC')->get()->toArray();
         return response()->json(['data' => $list], 200);

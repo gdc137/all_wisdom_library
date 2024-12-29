@@ -83,7 +83,8 @@
                 <table class="datatables-basic table">
                     <thead>
                         <tr>
-                            <th style="width: 10%">#</th>
+                            <th style="width: 5%">#</th>
+                            <th>Division</th>
                             <th>Slock</th>
                             <th>Details</th>
                             <th>Hindi</th>
@@ -100,6 +101,7 @@
                         @foreach ($data as $row)
                         <tr>
                             <td>{{ $i }}</td>
+                            <td>{{ $row['division'] }}</td>
                             <td>{{ $row['slock'] }}</td>
 
                             <td>
@@ -118,9 +120,11 @@
                                                 <b>Short Description</b> : {{ $row['short_description'] }}<br>
                                                 <b>Description</b> : {{ $row['description'] }}<br>
                                                 <b>Summary</b> : {{ $row['summary'] ?? "" }}<br>
-                                                <b>Audio</b> : <br><audio controls="controls">
+                                                <b>Audio</b> : @if (isset($row['audio']))
+                                                <br><audio controls="controls">
                                                     <source src="{{ asset('storage/slocks/' . $row['audio']) }}" type="audio/mp4" />
-                                                </audio><br>
+                                                </audio>
+                                                @endif<br>
                                                 <b>Slug</b> : {{ $row['meta_slug'] }}<br>
                                                 <b>Title</b> : {{ $row['meta_title'] }}<br>
                                                 <b>Desc</b> : {{ $row['meta_desc'] }}<br>
@@ -326,7 +330,7 @@
                             <div class="col-md-12 col-12">
                                 <div class="mb-1">
                                     <label class="form-label" for="hindi_short_description">Short Description</label>
-                                    <textarea name="hindi_short_description" id="hindi_short_description" class="form-control" placeholder="Enter Short Description">{{ isset($editdata) ? $editdata['hindi']['short_description'] : '' }}</textarea>
+                                    <textarea name="hindi_short_description" id="hindi_short_description" class="form-control" placeholder="Enter Short Description">{{ isset($editdata) && isset($editdata['hindi']['short_description']) ? $editdata['hindi']['short_description'] : '' }}</textarea>
                                     <p class="text-danger">{{ $errors->first('hindi_short_description') }}</p>
                                 </div>
                             </div>
@@ -334,7 +338,7 @@
                             <div class="col-md-12 col-12">
                                 <div class="mb-1">
                                     <label class="form-label" for="hindi_description">Description</label>
-                                    <textarea name="hindi_description" id="hindi_description" class="form-control" placeholder="Enter Description">{{ isset($editdata) ? $editdata['hindi']['description'] : '' }}</textarea>
+                                    <textarea name="hindi_description" id="hindi_description" class="form-control" placeholder="Enter Description">{{ isset($editdata) && isset($editdata['hindi']['description']) ? $editdata['hindi']['description'] : '' }}</textarea>
                                     <p class="text-danger">{{ $errors->first('hindi_description') }}</p>
                                 </div>
                             </div>
@@ -342,7 +346,7 @@
                             <div class="col-md-12 col-12">
                                 <div class="mb-1">
                                     <label class="form-label" for="hindi_summary">Summary</label>
-                                    <textarea name="hindi_summary" id="hindi_summary" class="form-control" placeholder="Enter Summary">{{ isset($editdata) ? $editdata['hindi']['summary'] : '' }}</textarea>
+                                    <textarea name="hindi_summary" id="hindi_summary" class="form-control" placeholder="Enter Summary">{{ isset($editdata) && isset($editdata['hindi']['summary']) ? $editdata['hindi']['summary'] : '' }}</textarea>
                                     <p class="text-danger">{{ $errors->first('hindi_summary') }}</p>
                                 </div>
                             </div>
@@ -361,7 +365,7 @@
                                     <audio controls="controls" id="hindi_preview" @if (!isset($editdata) || empty($editdata['hindi']['audio']))
                                         style="display:none"
                                         @endif>
-                                        <source src="{{ isset($editdata) ? asset('storage/slocks/' . $editdata['hindi']['audio']) : '' }}" type="audio/mp4" />
+                                        <source src="{{ isset($editdata) ? asset('storage/slocks/' . ($editdata['hindi']['audio'] ?? '')) : '' }}" type="audio/mp4" />
                                     </audio>
                                 </div>
                             </div>
@@ -372,7 +376,7 @@
                             <div class="col-md-12 col-12">
                                 <div class="mb-1">
                                     <label class="form-label" for="english_short_description">Short Description</label>
-                                    <textarea name="english_short_description" id="english_short_description" class="form-control" placeholder="Enter Short Description">{{ isset($editdata) ? $editdata['english']['short_description'] : '' }}</textarea>
+                                    <textarea name="english_short_description" id="english_short_description" class="form-control" placeholder="Enter Short Description">{{ isset($editdata) && isset($editdata['english']['short_description']) ? $editdata['english']['short_description'] : '' }}</textarea>
                                     <p class="text-danger">{{ $errors->first('english_short_description') }}</p>
                                 </div>
                             </div>
@@ -380,7 +384,7 @@
                             <div class="col-md-12 col-12">
                                 <div class="mb-1">
                                     <label class="form-label" for="english_description">Description</label>
-                                    <textarea name="english_description" id="english_description" class="form-control" placeholder="Enter Description">{{ isset($editdata) ? $editdata['english']['description'] : '' }}</textarea>
+                                    <textarea name="english_description" id="english_description" class="form-control" placeholder="Enter Description">{{ isset($editdata) && isset($editdata['english']['description']) ? $editdata['english']['description'] : '' }}</textarea>
                                     <p class="text-danger">{{ $errors->first('english_description') }}</p>
                                 </div>
                             </div>
@@ -388,7 +392,7 @@
                             <div class="col-md-12 col-12">
                                 <div class="mb-1">
                                     <label class="form-label" for="english_summary">Summary</label>
-                                    <textarea name="english_summary" id="english_summary" class="form-control" placeholder="Enter Summary">{{ isset($editdata) ? $editdata['english']['summary'] : '' }}</textarea>
+                                    <textarea name="english_summary" id="english_summary" class="form-control" placeholder="Enter Summary">{{ isset($editdata) && isset($editdata['english']['summary']) ? $editdata['english']['summary'] : '' }}</textarea>
                                     <p class="text-danger">{{ $errors->first('english_summary') }}</p>
                                 </div>
                             </div>
@@ -407,7 +411,7 @@
                                     <audio controls="controls" id="english_preview" @if (!isset($editdata) || empty($editdata['english']['audio']))
                                         style="display:none"
                                         @endif>
-                                        <source src="{{ isset($editdata) ? asset('storage/slocks/' . $editdata['english']['audio']) : '' }}" type="audio/mp4" />
+                                        <source src="{{ isset($editdata) ? asset('storage/slocks/' . ($editdata['english']['audio'] ?? '')) : '' }}" type="audio/mp4" />
                                     </audio>
                                 </div>
                             </div>

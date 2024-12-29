@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Division;
+use App\Models\Scripture;
+use App\Models\Slock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -9,7 +12,10 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return view('dashboard');
+        $scriptures = Scripture::count();
+        $divisions = Division::count();
+        $slocks = Slock::count();
+        return view('dashboard', ['scripture_count' => $scriptures, 'division_count' => $divisions, 'slock_count' => $slocks]);
     }
 
 

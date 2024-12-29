@@ -34,6 +34,36 @@
     </div>
 </div>
 
+<section>
+    <div class="card">
+        <div class="card-body">
+            <form method="POST" enctype="multipart/form-data" action="{{ route('divisions') }}">
+                @csrf
+
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <div class="mb-1">
+                            <label class="form-label" for="search_scripture_id">Scripture</label>
+                            <select name="search_scripture_id" id="search_scripture_id" class="form-control">
+                                <option value="">-- Select Scripture --</option>
+                                @foreach ($scriptures as $row)
+                                <option value="{{ $row['id'] }}">{{ $row['title'] }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-12">
+                        <div class="mb-1">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
 <section id="basic-datatable">
     <div class="row">
         <div class="col-12">
@@ -41,7 +71,8 @@
                 <table class="datatables-basic table">
                     <thead>
                         <tr>
-                            <th style="width: 10%">#</th>
+                            <th style="width: 5%">#</th>
+                            <th>Scripture</th>
                             <th>Title</th>
                             <th>Image</th>
                             <th>Visible At</th>
@@ -57,6 +88,7 @@
                         @foreach ($data as $row)
                         <tr>
                             <td>{{ $i }}</td>
+                            <td>{{ $row['scripture'] }}</td>
                             <td>{{ $row['title'] }}</td>
                             <td>
                                 <img src="{{ empty($row['image']) ? asset('uploads/noimg.jpg') : asset('uploads/divisions/' . $row['image']) }}" onclick="imagemodal(this.src)" height="100px" alt="Image">
@@ -147,7 +179,7 @@
                                     <select name="scripture_id" id="scripture_id" class="form-control">
                                         <option value="">-- Select Scripture --</option>
                                         @foreach ($scriptures as $row)
-                                            <option value="{{ $row['id'] }}" @selected(isset($editdata) ? ($editdata['scripture_id'] == $row['id']) : '')>{{ $row['title'] }}</option>
+                                        <option value="{{ $row['id'] }}" @selected(isset($editdata) ? ($editdata['scripture_id']==$row['id']) : '' )>{{ $row['title'] }}</option>
                                         @endforeach
                                     </select>
                                     <p class="text-danger">{{ $errors->first('scripture_id') }}</p>

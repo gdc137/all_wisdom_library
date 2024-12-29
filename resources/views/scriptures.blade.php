@@ -41,7 +41,7 @@
                 <table class="datatables-basic table">
                     <thead>
                         <tr>
-                            <th style="width: 10%">#</th>
+                            <th style="width: 5%">#</th>
                             <th>Title</th>
                             <th>Image</th>
                             <th>Visible At</th>

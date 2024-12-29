@@ -18,11 +18,6 @@ use App\Http\Controllers\SlockController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->prefix('_admin')->group(function () {
-
-    // Register / enable when need to add admin
-    // Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
-    // Route::post('register', [RegisteredUserController::class, 'store']);
-
     // login 
     Route::get('/', [AuthenticatedSessionController::class, 'create'])->name('login');
     Route::post('login', [AuthenticatedSessionController::class, 'store'])->name('login.post');
@@ -31,10 +26,6 @@ Route::middleware('guest')->prefix('_admin')->group(function () {
     Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
     Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
     Route::post('reset-password', [NewPasswordController::class, 'store'])->name('password.store');
-
-    // Route::get('/terms-condition', [HomeController::class, 'termsCondition'])->name('terms-condition');
-    // Route::get('/privacy-policy', [HomeController::class, 'privacyPolicy'])->name('privacy-policy');
-    // Route::get('/refund-cancellation', [HomeController::class, 'refundCancellation'])->name('refund-cancellation');
 });
 
 Route::middleware('auth')->prefix('_admin')->group(function () {
@@ -66,6 +57,7 @@ Route::middleware('auth')->prefix('_admin')->group(function () {
 
     // divisions
     Route::get('/divisions', [DivisionController::class, 'list'])->name('divisions');
+    Route::post('/divisions', [DivisionController::class, 'list'])->name('divisions');
     Route::post('/divisions/add', [DivisionController::class, 'add'])->name('divisions.add');
     Route::get('/divisions/{id}/edit', [DivisionController::class, 'edit'])->name('divisions.edit');
     Route::patch('/divisions/{id}/edit', [DivisionController::class, 'edit'])->name('divisions.edit');

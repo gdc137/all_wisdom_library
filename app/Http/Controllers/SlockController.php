@@ -33,6 +33,8 @@ class SlockController extends Controller
             foreach ($list as $key => $singlerow) {
                 $hindi = Slock::where('ref_id', $singlerow['id'])->where('lang_id', 2)->first();
                 $english = Slock::where('ref_id', $singlerow['id'])->where('lang_id', 3)->first();
+                $division = Division::find($singlerow['id']);
+                $list[$key]['division'] = Scripture::find($division->id)->title . " - " . $division->title;
                 $list[$key]['hindi'] = $hindi ? $hindi->toArray() : null;
                 $list[$key]['english'] = $english ? $english->toArray() : null;
             }
