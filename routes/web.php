@@ -15,6 +15,7 @@ Route::get('/slock/{id}/{slug}', [SlockController::class, 'bhav'])->name('u-sloc
 
 Route::get('/about-us', [HomeController::class, 'aboutUs'])->name('about-us');
 Route::get('/contact-us', [HomeController::class, 'contactUs'])->name('contact-us');
+Route::post('/contact-us', [HomeController::class, 'contactUs'])->name('contact-us');
 Route::get('/terms-policies', [HomeController::class, 'termsPolicies'])->name('terms-policies');
 
 require __DIR__ . '/auth.php';

@@ -149,7 +149,7 @@
         </section>
     </div>
 
-    <div class="instagram-wrapper mt-5">
+    <div class="instagram-wrapper">
         <div class="ig-id">
             <a href="https://whatsapp.com/channel/0029Vb1dx8eEquiTmsUzpD2d"><b>Join us</b><br><img src="{{ asset('user-assets/imgs/whatsappp.png') }}" style="width: 50px;" alt=""></a>
         </div>

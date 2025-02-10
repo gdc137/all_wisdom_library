@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contact;
 use App\Models\Division;
 use App\Models\Scripture;
 use App\Models\Slock;
@@ -24,9 +25,31 @@ class HomeController extends Controller
         return view('user.aboutus');
     }
 
-    public function contactUs()
+    public function contactUs(Request $request)
     {
-        return view('user.contactus');
+        if ($request->isMethod('get')) {
+            return view('user.contactus');
+        }
+
+        if ($request->isMethod('post')) {
+            $request->validate([
+                'name' => ['required'],
+                'email' => ['required'],
+                'number' => ['required', 'numeric'],
+                'subject' => ['required'],
+                'message' => ['required'],
+            ]);
+
+            Contact::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'number' => $request->number,
+                'subject' => $request->subject,
+                'message' => $request->message,
+            ]);
+
+            return redirect()->route('contact-us')->with('success', 'Message sent successfully!');
+        }
     }
 
     public function termsPolicies()
