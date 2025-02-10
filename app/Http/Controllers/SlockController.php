@@ -9,6 +9,17 @@ use Illuminate\Http\Request;
 
 class SlockController extends Controller
 {
+    public function index()
+    {
+        return view('user.slocks');
+    }
+
+    public function bhav()
+    {
+        return view('user.bhav');
+    }
+
+    // admin
     public function list(Request $request)
     {
         $scriptures = Scripture::where('delete_status', 0)->where('active_status', 1)->orderBy('id')->get()->toArray();

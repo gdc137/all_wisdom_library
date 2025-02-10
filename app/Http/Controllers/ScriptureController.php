@@ -8,6 +8,12 @@ use Intervention\Image\Laravel\Facades\Image;
 
 class ScriptureController extends Controller
 {
+    public function index(){
+        return view('user.scriptures');
+    }
+
+    // admin
+
     public function list()
     {
         $list = Scripture::where('delete_status', 0)->orderBy('id')->get()->toArray();

@@ -10,6 +10,32 @@ use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
+
+    public function home()
+    {
+        $scriptures = Scripture::where('delete_status', 0)->where('active_status', 1)->get()->toArray();
+        $headslock = Slock::join('divisions', 'divisions.id', 'slocks.division_id')->where('slocks.id', 1)->get(['divisions.title', 'divisions.image', 'slocks.*'])->first()->toArray();
+        $displayslocks = Slock::join('divisions', 'divisions.id', 'slocks.division_id')->whereIn('slocks.id', [1, 2, 3, 4, 5, 6])->get(['divisions.title', 'divisions.image', 'slocks.*'])->toArray();
+        return view('user.home', ['scriptures' => $scriptures, 'headslock' => $headslock, 'displayslocks' => $displayslocks]);
+    }
+
+    public function aboutUs()
+    {
+        return view('user.aboutus');
+    }
+
+    public function contactUs()
+    {
+        return view('user.contactus');
+    }
+
+    public function termsPolicies()
+    {
+        return view('user.termspolicy');
+    }
+
+
+    //admin
     public function index()
     {
         $scriptures = Scripture::count();
@@ -17,7 +43,6 @@ class HomeController extends Controller
         $slocks = Slock::count();
         return view('dashboard', ['scripture_count' => $scriptures, 'division_count' => $divisions, 'slock_count' => $slocks]);
     }
-
 
     // file proccess
 

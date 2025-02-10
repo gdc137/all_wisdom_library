@@ -224,7 +224,7 @@
                                     <label class="form-label" for="visible_at">Visible At</label>
                                     <input type="date" class="form-control" name="visible_at" id="visible_at"
                                         value="{{ isset($editdata) ? date('Y-m-d', strtotime($editdata['visible_at'])) : '' }}"
-                                        placeholder="Enter Visible At" min="{{ date('Y-m-d') }}">
+                                        placeholder="Enter Visible At" min="{{ isset($editdata) ? date('Y-m-d', strtotime($editdata['visible_at'])) : date('Y-m-d') }}">
                                     <p class="text-danger">{{ $errors->first('visible_at') }}</p>
                                 </div>
                             </div>
