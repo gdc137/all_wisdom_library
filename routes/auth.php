@@ -14,7 +14,7 @@ use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ScriptureController;
-use App\Http\Controllers\SlockController;
+use App\Http\Controllers\ShlokController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->prefix('_admin')->group(function () {
@@ -65,12 +65,12 @@ Route::middleware('auth')->prefix('_admin')->group(function () {
     Route::post('/divisions/change-status', [DivisionController::class, 'changeStatus'])->name('divisions.change-status');
     Route::post('/divisions/list', [DivisionController::class, 'ajaxList'])->name('divisions.list');
 
-    // slocks
-    Route::get('/slocks', [SlockController::class, 'list'])->name('slocks');
-    Route::post('/slocks', [SlockController::class, 'list'])->name('slocks');
-    Route::post('/slocks/add', [SlockController::class, 'add'])->name('slocks.add');
-    Route::get('/slocks/{id}/edit', [SlockController::class, 'edit'])->name('slocks.edit');
-    Route::patch('/slocks/{id}/edit', [SlockController::class, 'edit'])->name('slocks.edit');
-    Route::delete('/slocks/{id}/delete', [SlockController::class, 'delete'])->name('slocks.delete');
-    Route::post('/slocks/change-status', [SlockController::class, 'changeStatus'])->name('slocks.change-status');
+    // shloks
+    Route::get('/shloks', [ShlokController::class, 'list'])->name('shloks');
+    Route::post('/shloks', [ShlokController::class, 'list'])->name('shloks');
+    Route::post('/shloks/add', [ShlokController::class, 'add'])->name('shloks.add');
+    Route::get('/shloks/{id}/edit', [ShlokController::class, 'edit'])->name('shloks.edit');
+    Route::patch('/shloks/{id}/edit', [ShlokController::class, 'edit'])->name('shloks.edit');
+    Route::delete('/shloks/{id}/delete', [ShlokController::class, 'delete'])->name('shloks.delete');
+    Route::post('/shloks/change-status', [ShlokController::class, 'changeStatus'])->name('shloks.change-status');
 });

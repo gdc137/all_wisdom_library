@@ -59,7 +59,7 @@
                             <td>{{ $i }}</td>
                             <td>{{ $row['title'] }}</td>
                             <td>
-                                <img src="{{ empty($row['image']) ? asset('uploads/noimg.jpg') : asset('uploads/scriptures/' . $row['image']) }}" onclick="imagemodal(this.src)" height="100px" alt="Image">
+                                <img src="{{ empty($row['image']) ? asset('uploads/noimg.jpg') : asset($row['image']) }}" onclick="imagemodal(this.src)" height="100px" alt="Image">
                             </td>
                             <td>{{ date('d-m-Y H:i a', strtotime($row['visible_at'])) }}</td>
                             <td>
@@ -75,7 +75,7 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <b>Description</b> : {{ $row['description'] }}<br>
+                                                <b>Description</b> : {!! $row['description'] !!}<br>
                                                 <b>Author</b> : {{ $row['author'] }}<br>
                                                 <b>Publish Detail</b> : {{ $row['publish_detail'] }}<br>
                                                 <b>Root Language</b> : {{ $row['root_language'] }}<br>
@@ -182,7 +182,7 @@
                             </div>
                             <div class="col-md-4 col-12 invisible" id="imgpr">
                                 <div class="mb-1">
-                                    <img src="{{ isset($editdata) ? (empty($editdata['image']) ? asset('uploads/noimg.jpg') : asset('uploads/scriptures/' . $editdata['image'])) : '' }}"
+                                    <img src="{{ isset($editdata) ? (empty($editdata['image']) ? asset('uploads/noimg.jpg') : asset($editdata['image'])) : '' }}"
                                         id="imgPreview" class="w-100" alt="preview">
                                 </div>
                             </div>
@@ -239,10 +239,10 @@
 
                             <div class="col-md-12 col-12">
                                 <div class="mb-1">
-                                    <label class="form-label" for="meta_desc">Meta Ddescription</label>
+                                    <label class="form-label" for="meta_desc">Meta Description</label>
                                     <input type="text" class="form-control" name="meta_desc" id="meta_desc"
                                         value="{{ isset($editdata) ? $editdata['meta_desc'] : '' }}"
-                                        placeholder="Enter Meta Ddescription">
+                                        placeholder="Enter Meta Description">
                                     <p class="text-danger">{{ $errors->first('meta_desc') }}</p>
                                 </div>
                             </div>
@@ -456,6 +456,8 @@
                 }
             }
         });
+
+        Jodit.make('#description');
 
         $("#image").change(function() {
             const file = this.files[0];

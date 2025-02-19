@@ -40,8 +40,8 @@
                                 </div>
                             </div>
                             <div class="my-auto">
-                                <h4 class="fw-bolder mb-0">{{ $slock_count }} Nos</h4>
-                                <p class="card-text font-small-3 mb-0">Slocks</p>
+                                <h4 class="fw-bolder mb-0">{{ $shlok_count }} Nos</h4>
+                                <p class="card-text font-small-3 mb-0">Shloks</p>
                             </div>
                         </div>
                     </div>

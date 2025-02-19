@@ -4,19 +4,56 @@ namespace App\Http\Controllers;
 
 use App\Models\Division;
 use App\Models\Scripture;
-use App\Models\Slock;
+use App\Models\Shlok;
 use Illuminate\Http\Request;
 
-class SlockController extends Controller
+class ShlokController extends Controller
 {
-    public function index()
+    public function index($id, $slug)
     {
-        return view('user.slocks');
+        $data = Division::where('id', $id)->where('active_status', 1)->where('delete_status', 0)->where('visible_at', '<=', date('Y-m-d H:i:s'))->first();
+        if ($data == null) {
+            return abort(404);
+        }
+
+        $division = Division::find($id)->toArray();
+        $shloks = Shlok::where('division_id', $id)->where('lang_id', 1)->where('active_status', 1)->where('visible_at', '<=', date('Y-m-d H:i:s'))->orderBy('visible_at')->get()->toArray();
+
+        return view('user.shloks', ['division' => $division, 'shloks' => $shloks]);
     }
 
-    public function bhav()
+    public function bhav($id, $slug)
     {
-        return view('user.bhav');
+        $data = Shlok::where('id', $id)->where('active_status', 1)->where('visible_at', '<=', date('Y-m-d H:i:s'))->first();
+        if ($data == null) {
+            return abort(404);
+        }
+
+        $shlok = Shlok::find($id);
+        $ref_id = $shlok->ref_id ?? $shlok->id;
+
+        $division = Division::find($shlok->division_id)->toArray();
+
+        $details = Shlok::find($ref_id)->toArray();
+        $hindi = Shlok::where('ref_id', $ref_id)->where('lang_id', 2)->first();
+        $details['hindi'] = $hindi ? $hindi->toArray() : [];
+        $english = Shlok::where('ref_id', $ref_id)->where('lang_id', 3)->first();
+        $details['english'] = $english ? $english->toArray() : [];
+
+        $extra = Shlok::where('id', '>', $id)->where('lang_id', 1)->where('active_status', 1)->where('visible_at', '<=', date('Y-m-d H:i:s'));
+
+        $count = $extra->count();
+
+        if ($count >= 2) {
+            $shreni = $extra->limit(2)->get()->toArray();
+        } elseif ($count == 1) {
+            $shreni = $extra->get()->toArray();
+            array_push($shreni, Shlok::where('id', '<', $id)->where('lang_id', 1)->where('active_status', 1)->where('visible_at', '<=', date('Y-m-d H:i:s'))->first()->toArray());
+        }else {
+            $shreni = Shlok::where('id', '<', $id)->where('lang_id', 1)->where('active_status', 1)->where('visible_at', '<=', date('Y-m-d H:i:s'))->orderBy('id', 'DESC')->limit(2)->get()->toArray();
+        }
+
+        return view('user.bhav', ['division' => $division, 'shlok' => $details, 'shreni' => $shreni]);
     }
 
     // admin
@@ -26,12 +63,12 @@ class SlockController extends Controller
         $divisions = Division::where('delete_status', 0)->where('active_status', 1)->orderBy('id')->get()->toArray();
 
         if ($request->isMethod('get')) {
-            return view('slocks', ['data' => [], 'scriptures' => $scriptures, 'divisions' => $divisions]);
+            return view('shloks', ['data' => [], 'scriptures' => $scriptures, 'divisions' => $divisions]);
         }
 
         if ($request->isMethod('post')) {
 
-            $list = Slock::where('lang_id', 1);
+            $list = Shlok::where('lang_id', 1);
             if ($request->search_division_id) {
                 $list->where('division_id', $request->search_division_id);
             } elseif ($request->search_scripture_id) {
@@ -42,15 +79,15 @@ class SlockController extends Controller
             $list = $list->orderBy('id', 'DESC')->get()->toArray();
 
             foreach ($list as $key => $singlerow) {
-                $hindi = Slock::where('ref_id', $singlerow['id'])->where('lang_id', 2)->first();
-                $english = Slock::where('ref_id', $singlerow['id'])->where('lang_id', 3)->first();
-                $division = Division::find($singlerow['id']);
-                $list[$key]['division'] = Scripture::find($division->id)->title . " - " . $division->title;
+                $hindi = Shlok::where('ref_id', $singlerow['id'])->where('lang_id', 2)->first();
+                $english = Shlok::where('ref_id', $singlerow['id'])->where('lang_id', 3)->first();
+                $division = Division::find($singlerow['division_id']);
+                $list[$key]['division'] = Scripture::find($division->scripture_id)->title . " - " . $division->title;
                 $list[$key]['hindi'] = $hindi ? $hindi->toArray() : null;
                 $list[$key]['english'] = $english ? $english->toArray() : null;
             }
 
-            return view('slocks', ['data' => $list, 'scriptures' => $scriptures, 'divisions' => $divisions]);
+            return view('shloks', ['data' => $list, 'scriptures' => $scriptures, 'divisions' => $divisions]);
         }
     }
 
@@ -58,7 +95,7 @@ class SlockController extends Controller
     {
         $request->validate([
             'division_id' => ['required', 'numeric'],
-            'slock' => ['required'],
+            'shlok' => ['required'],
             'gujarati_short_description' => ['required'],
             'gujarati_description' => ['required'],
             'gujarati_audio' => ['file', 'max:2048'],
@@ -67,15 +104,17 @@ class SlockController extends Controller
 
         if ($request->has('gujarati_audio')) {
             $file_name = uniqid() . time() . '.' . $request->gujarati_audio->getClientOriginalExtension();
-            $file_path = 'slocks/';
+            $file_path = 'shloks/';
 
             HomeController::storeFileDirect($file_path, $request->file('gujarati_audio'), $file_name);
+
+            $file_name = 'storage/shloks/' . $file_name;
         }
 
-        $ref = Slock::create([
+        $ref = Shlok::create([
             'lang_id' => 1,
             'division_id' => $request->division_id,
-            'slock' => $request->slock,
+            'shlok' => $request->shlok,
             'short_description' => $request->gujarati_short_description,
             'description' => $request->gujarati_description,
             'summary' => $request->gujarati_summary,
@@ -90,16 +129,18 @@ class SlockController extends Controller
         if ($request->hindi_description) {
             if ($request->has('hindi_audio')) {
                 $hindi_file_name = uniqid() . time() . '.' . $request->hindi_audio->getClientOriginalExtension();
-                $file_path = 'slocks/';
+                $file_path = 'shloks/';
 
                 HomeController::storeFileDirect($file_path, $request->file('hindi_audio'), $hindi_file_name);
+
+                $hindi_file_name = 'storage/shloks/' . $hindi_file_name;
             }
 
-            Slock::create([
+            Shlok::create([
                 'lang_id' => 2,
                 'division_id' => $request->division_id,
                 'ref_id' => $ref->id,
-                'slock' => $request->slock,
+                'shlok' => $request->shlok,
                 'short_description' => $request->hindi_short_description,
                 'description' => $request->hindi_description,
                 'summary' => $request->hindi_summary,
@@ -115,16 +156,18 @@ class SlockController extends Controller
         if ($request->english_description) {
             if ($request->has('english_audio')) {
                 $english_file_name = uniqid() . time() . '.' . $request->english_audio->getClientOriginalExtension();
-                $file_path = 'slocks/';
+                $file_path = 'shloks/';
 
                 HomeController::storeFileDirect($file_path, $request->file('english_audio'), $english_file_name);
+
+                $english_file_name = 'storage/shloks/' . $english_file_name;
             }
 
-            Slock::create([
+            Shlok::create([
                 'lang_id' => 3,
                 'division_id' => $request->division_id,
                 'ref_id' => $ref->id,
-                'slock' => $request->slock,
+                'shlok' => $request->shlok,
                 'short_description' => $request->english_short_description,
                 'description' => $request->english_description,
                 'summary' => $request->english_summary,
@@ -143,11 +186,11 @@ class SlockController extends Controller
     public function edit(Request $request, $id)
     {
         if ($request->isMethod('get')) {
-            $editdata = Slock::where('id', $id)->first()->toArray();
+            $editdata = Shlok::where('id', $id)->first()->toArray();
             $editdata['scripture_id'] = Division::find($editdata['division_id'])->scripture_id;
 
-            $hindi = Slock::where('ref_id', $editdata['id'])->where('lang_id', 2)->first();
-            $english = Slock::where('ref_id', $editdata['id'])->where('lang_id', 3)->first();
+            $hindi = Shlok::where('ref_id', $editdata['id'])->where('lang_id', 2)->first();
+            $english = Shlok::where('ref_id', $editdata['id'])->where('lang_id', 3)->first();
 
             $editdata['hindi'] = $hindi ? $hindi->toArray() : null;
             $editdata['english'] = $english ? $english->toArray() : null;
@@ -155,34 +198,34 @@ class SlockController extends Controller
             $scriptures = Scripture::where('delete_status', 0)->where('active_status', 1)->orderBy('id')->get()->toArray();
             $divisions = Division::where('scripture_id', $editdata['scripture_id'])->where('delete_status', 0)->where('active_status', 1)->orderBy('id')->get()->toArray();
 
-            return view('slocks', ['data' => [], 'editdata' => $editdata, 'scriptures' => $scriptures, 'divisions' => $divisions]);
+            return view('shloks', ['data' => [], 'editdata' => $editdata, 'scriptures' => $scriptures, 'divisions' => $divisions]);
         }
 
         if ($request->isMethod('patch')) {
             $request->validate([
                 'division_id' => ['required', 'numeric'],
-                'slock' => ['required'],
+                'shlok' => ['required'],
                 'gujarati_short_description' => ['required'],
                 'gujarati_description' => ['required'],
                 'gujarati_audio' => ['file', 'max:2048'],
                 'visible_at' => ['required', 'date'],
             ]);
 
-            $row = Slock::find($id);
+            $row = Shlok::find($id);
             $row->division_id = $request->division_id;
-            $row->slock = $request->slock;
+            $row->shlok = $request->shlok;
             $row->short_description = $request->gujarati_short_description;
             $row->description = $request->gujarati_description;
             $row->summary = $request->gujarati_summary;
 
             if ($request->has('gujarati_audio')) {
                 $file_name = uniqid() . time() . '.' . $request->gujarati_audio->getClientOriginalExtension();
-                $file_path = 'slocks/';
+                $file_path = 'shloks/';
 
                 HomeController::deleteStoredFile($file_path . $row->audio);
 
                 HomeController::storeFileDirect($file_path, $request->file('gujarati_audio'), $file_name);
-                $row->audio = $file_name;
+                $row->audio = 'storage/shloks/' . $file_name;
             }
 
             $row->visible_at = date('Y-m-d H:i:s', strtotime($request->visible_at . " 06:00:00"));
@@ -193,21 +236,21 @@ class SlockController extends Controller
             $row->save();
 
             if ($request->hindi_description) {
-                $row = Slock::where('lang_id', 2)->where('ref_id', $id)->first();
+                $row = Shlok::where('lang_id', 2)->where('ref_id', $id)->first();
                 $row->division_id = $request->division_id;
-                $row->slock = $request->slock;
+                $row->shlok = $request->shlok;
                 $row->short_description = $request->hindi_short_description;
                 $row->description = $request->hindi_description;
                 $row->summary = $request->hindi_summary;
 
                 if ($request->has('hindi_audio')) {
                     $file_name = uniqid() . time() . '.' . $request->hindi_audio->getClientOriginalExtension();
-                    $file_path = 'slocks/';
+                    $file_path = 'shloks/';
 
                     HomeController::deleteStoredFile($file_path . $row->audio);
 
                     HomeController::storeFileDirect($file_path, $request->file('hindi_audio'), $file_name);
-                    $row->audio = $file_name;
+                    $row->audio = 'storage/shloks/' . $file_name;
                 }
 
                 $row->visible_at = date('Y-m-d H:i:s', strtotime($request->visible_at . " 06:00:00"));
@@ -219,21 +262,21 @@ class SlockController extends Controller
             }
 
             if ($request->english_description) {
-                $row = Slock::where('lang_id', 3)->where('ref_id', $id)->first();
+                $row = Shlok::where('lang_id', 3)->where('ref_id', $id)->first();
                 $row->division_id = $request->division_id;
-                $row->slock = $request->slock;
+                $row->shlok = $request->shlok;
                 $row->short_description = $request->english_short_description;
                 $row->description = $request->english_description;
                 $row->summary = $request->english_summary;
 
                 if ($request->has('english_audio')) {
                     $file_name = uniqid() . time() . '.' . $request->english_audio->getClientOriginalExtension();
-                    $file_path = 'slocks/';
+                    $file_path = 'shloks/';
 
                     HomeController::deleteStoredFile($file_path . $row->audio);
 
                     HomeController::storeFileDirect($file_path, $request->file('english_audio'), $file_name);
-                    $row->audio = $file_name;
+                    $row->audio = 'storage/shloks/' . $file_name;
                 }
 
                 $row->visible_at = date('Y-m-d H:i:s', strtotime($request->visible_at . " 06:00:00"));
@@ -244,30 +287,30 @@ class SlockController extends Controller
                 $row->save();
             }
 
-            return redirect()->route('slocks')->with('success', 'Updated Successfully!');
+            return redirect()->route('shloks')->with('success', 'Updated Successfully!');
         }
     }
 
     public function delete(Request $request, $id)
     {
-        $slocks = Slock::where('ref_id', $id)->get()->toArray();
-        foreach ($slocks as $singleSlock) {
-            HomeController::deleteStoredFile('slocks/' . $singleSlock['audio']);
+        $shloks = Shlok::where('ref_id', $id)->get()->toArray();
+        foreach ($shloks as $singleShlok) {
+            HomeController::deleteStoredFile(str_replace('storage/', '', $singleShlok['audio']));
         }
 
-        HomeController::deleteStoredFile('slocks/' . Slock::find($id)->audio);
+        HomeController::deleteStoredFile(str_replace('storage/', '', Shlok::find($id)->audio));
 
-        Slock::where('id', $id)->orWhere('ref_id', $id)->delete();
-        return redirect()->route('slocks')->with('success', 'Deleted Successfully!');
+        Shlok::where('id', $id)->orWhere('ref_id', $id)->delete();
+        return redirect()->route('shloks')->with('success', 'Deleted Successfully!');
     }
 
     // ajax call 
     public function changeStatus(Request $request)
     {
-        $row = Slock::find($request->id);
+        $row = Shlok::find($request->id);
         $row->active_status = $row->active_status == 1 ? 0 : 1;
 
-        Slock::where('ref_id', $request->id)->update(['active_status' => $row->active_status]);
+        Shlok::where('ref_id', $request->id)->update(['active_status' => $row->active_status]);
 
         if ($row->save()) {
             return response()->json('success', 200);

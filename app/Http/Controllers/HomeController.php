@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Contact;
 use App\Models\Division;
 use App\Models\Scripture;
-use App\Models\Slock;
+use App\Models\Shlok;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -14,10 +14,17 @@ class HomeController extends Controller
 
     public function home()
     {
-        $scriptures = Scripture::where('delete_status', 0)->where('active_status', 1)->get()->toArray();
-        $headslock = Slock::join('divisions', 'divisions.id', 'slocks.division_id')->where('slocks.id', 1)->get(['divisions.title', 'divisions.image', 'slocks.*'])->first()->toArray();
-        $displayslocks = Slock::join('divisions', 'divisions.id', 'slocks.division_id')->whereIn('slocks.id', [1, 2, 3, 4, 5, 6])->get(['divisions.title', 'divisions.image', 'slocks.*'])->toArray();
-        return view('user.home', ['scriptures' => $scriptures, 'headslock' => $headslock, 'displayslocks' => $displayslocks]);
+        $scriptures = Scripture::where('delete_status', 0)->where('active_status', 1)->where('visible_at', '<=', date('Y-m-d H:i:s'))->get()->toArray();
+        $headshlok = Shlok::join('divisions', 'divisions.id', 'shloks.division_id')->where('shloks.active_status', 1)->where('shloks.id', 1)->where('shloks.visible_at', '<=', date('Y-m-d H:i:s'))->get(['divisions.title', 'divisions.image', 'shloks.*'])->first()->toArray();
+        $displayshloks = Shlok::join('divisions', 'divisions.id', 'shloks.division_id')->where('shloks.active_status', 1)->where('lang_id', 1)->where('shloks.visible_at', '<=', date('Y-m-d H:i:s'))->orderBy('id')->offset(2)->limit(5)->get(['divisions.title', 'divisions.image', 'shloks.*'])->toArray();
+        return view('user.home', ['scriptures' => $scriptures, 'headshlok' => $headshlok, 'displayshloks' => $displayshloks]);
+    }
+
+    public function today()
+    {
+        $shlok = Shlok::where('active_status', 1)->where('lang_id', 1)->where('visible_at', '<=', date('Y-m-d H:i:s'))->orderBy('id', 'DESC')->first()->toArray();
+        
+        return redirect()->route('u-shlok', [$shlok['id'], $shlok['meta_slug'] ?? 'shlok']);
     }
 
     public function aboutUs()
@@ -63,8 +70,8 @@ class HomeController extends Controller
     {
         $scriptures = Scripture::count();
         $divisions = Division::count();
-        $slocks = Slock::count();
-        return view('dashboard', ['scripture_count' => $scriptures, 'division_count' => $divisions, 'slock_count' => $slocks]);
+        $shloks = Shlok::count();
+        return view('dashboard', ['scripture_count' => $scriptures, 'division_count' => $divisions, 'shlok_count' => $shloks]);
     }
 
     // file proccess

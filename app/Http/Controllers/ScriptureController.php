@@ -8,8 +8,10 @@ use Intervention\Image\Laravel\Facades\Image;
 
 class ScriptureController extends Controller
 {
-    public function index(){
-        return view('user.scriptures');
+    public function index()
+    {
+        $scriptures = Scripture::where('visible_at', '<=', date('Y-m-d H:i:s'))->where('delete_status', 0)->where('active_status', 1)->get()->toArray();
+        return view('user.scriptures', ['scriptures' => $scriptures]);
     }
 
     // admin
@@ -33,6 +35,8 @@ class ScriptureController extends Controller
             $image_path = public_path('uploads/scriptures/');
 
             Image::read($request->file('image'))->resize(1200, 800)->save($image_path . $image_name);
+
+            $image_name = 'uploads/scriptures/' . $image_name;
         }
 
         Scripture::create([
@@ -80,7 +84,7 @@ class ScriptureController extends Controller
                 !empty($row->image) ? unlink($image_path . $row->image) : '';
 
                 Image::read($request->file('image'))->resize(1200, 800)->save($image_path . $image_name);
-                $row->image = $image_name;
+                $row->image = 'uploads/scriptures/' . $image_name;
             }
 
             $row->author = $request->author;

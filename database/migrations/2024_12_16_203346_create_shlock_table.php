@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('slocks', function (Blueprint $table) {
+        Schema::create('shloks', function (Blueprint $table) {
             $table->id();
             $table->integer('lang_id')->index();
             $table->integer('division_id')->index();
             $table->integer('ref_id')->index()->nullable();
-            $table->text('slock', 500);
+            $table->text('shlok', 500);
             $table->text('short_description');
             $table->text('description');
             $table->text('summary')->nullable();
@@ -36,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('slocks');
+        Schema::dropIfExists('shloks');
     }
 };

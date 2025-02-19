@@ -28,10 +28,10 @@
                 </a>
             </li>
 
-            <li class="nav-item {{ strpos(Route::currentRouteName(), 'slocks') === 0 ? 'active' : '' }}">
-                <a class="d-flex align-items-center" href="{{ route('slocks') }}">
+            <li class="nav-item {{ strpos(Route::currentRouteName(), 'shloks') === 0 ? 'active' : '' }}">
+                <a class="d-flex align-items-center" href="{{ route('shloks') }}">
                     <i class="fa-solid fa-list"></i>
-                    <span class="menu-title text-truncate" data-i18n="home">Slocks</span>
+                    <span class="menu-title text-truncate" data-i18n="home">Shloks</span>
                 </a>
             </li>
 

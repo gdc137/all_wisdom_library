@@ -91,7 +91,7 @@
                             <td>{{ $row['scripture'] }}</td>
                             <td>{{ $row['title'] }}</td>
                             <td>
-                                <img src="{{ empty($row['image']) ? asset('uploads/noimg.jpg') : asset('uploads/divisions/' . $row['image']) }}" onclick="imagemodal(this.src)" height="100px" alt="Image">
+                                <img src="{{ empty($row['image']) ? asset('uploads/noimg.jpg') : asset($row['image']) }}" onclick="imagemodal(this.src)" height="100px" alt="Image">
                             </td>
                             <td>{{ date('d-m-Y H:i a', strtotime($row['visible_at'])) }}</td>
                             <td>
@@ -107,7 +107,7 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <b>Description</b> : {{ $row['description'] }}<br>
+                                                <b>Description</b> : {!! $row['description'] !!}<br>
                                                 <b>Slug</b> : {{ $row['meta_slug'] }}<br>
                                                 <b>Title</b> : {{ $row['meta_title'] }}<br>
                                                 <b>Desc</b> : {{ $row['meta_desc'] }}<br>
@@ -214,7 +214,7 @@
                             </div>
                             <div class="col-md-4 col-12 invisible" id="imgpr">
                                 <div class="mb-1">
-                                    <img src="{{ isset($editdata) ? (empty($editdata['image']) ? asset('uploads/noimg.jpg') : asset('uploads/divisions/' . $editdata['image'])) : '' }}"
+                                    <img src="{{ isset($editdata) ? (empty($editdata['image']) ? asset('uploads/noimg.jpg') : asset($editdata['image'])) : '' }}"
                                         id="imgPreview" class="w-100" alt="preview">
                                 </div>
                             </div>
@@ -468,6 +468,8 @@
                 }
             }
         });
+
+        Jodit.make('#description');
 
         $("#image").change(function() {
             const file = this.files[0];

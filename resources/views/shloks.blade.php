@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Slocks')
+@section('title', 'Shloks')
 
 @section('head')
 
@@ -13,12 +13,12 @@
     <div class="content-header-left col-md-9 col-12 mb-2">
         <div class="row breadcrumbs-top">
             <div class="col-12">
-                <h2 class="content-header-title float-start mb-0 d-none" style="display: none !important;">Slocks
+                <h2 class="content-header-title float-start mb-0 d-none" style="display: none !important;">Shloks
                 </h2>
                 <div class="breadcrumb-wrapper">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Slocks</li>
+                        <li class="breadcrumb-item active">Shloks</li>
                     </ol>
                 </div>
             </div>
@@ -37,7 +37,7 @@
 <section>
     <div class="card">
         <div class="card-body">
-            <form method="POST" enctype="multipart/form-data" action="{{ route('slocks') }}">
+            <form method="POST" enctype="multipart/form-data" action="{{ route('shloks') }}">
                 @csrf
 
                 <div class="row">
@@ -85,7 +85,7 @@
                         <tr>
                             <th style="width: 5%">#</th>
                             <th>Division</th>
-                            <th>Slock</th>
+                            <th style="width: 50%;">Shlok</th>
                             <th>Details</th>
                             <th>Hindi</th>
                             <th>English</th>
@@ -102,7 +102,7 @@
                         <tr>
                             <td>{{ $i }}</td>
                             <td>{{ $row['division'] }}</td>
-                            <td>{{ $row['slock'] }}</td>
+                            <td>{!! $row['shlok'] !!}</td>
 
                             <td>
                                 <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#modaldetail{{ $row['id'] }}">
@@ -113,16 +113,16 @@
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h4 class="modal-title" id="myModalLabel18">Slock Details</h4>
+                                                <h4 class="modal-title" id="myModalLabel18">Shlok Details</h4>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <b>Short Description</b> : {{ $row['short_description'] }}<br>
-                                                <b>Description</b> : {{ $row['description'] }}<br>
-                                                <b>Summary</b> : {{ $row['summary'] ?? "" }}<br>
+                                                <b>Short Description</b> : {!! $row['short_description'] !!}<br>
+                                                <b>Description</b> : {!! $row['description'] !!}<br>
+                                                <b>Summary</b> : {!! $row['summary'] ?? "" !!}<br>
                                                 <b>Audio</b> : @if (isset($row['audio']))
                                                 <br><audio controls="controls">
-                                                    <source src="{{ asset('storage/slocks/' . $row['audio']) }}" type="audio/mp4" />
+                                                    <source src="{{ asset($row['audio']) }}" type="audio/mp4" />
                                                 </audio>
                                                 @endif<br>
                                                 <b>Slug</b> : {{ $row['meta_slug'] }}<br>
@@ -148,12 +148,12 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <b>Short Description</b> : {{ $row['hindi']['short_description'] ?? "" }}<br>
-                                                <b>Description</b> : {{ $row['hindi']['description'] ?? "" }}<br>
-                                                <b>Summary</b> : {{ $row['hindi']['summary'] ?? "" }}<br>
+                                                <b>Short Description</b> : {!! $row['hindi']['short_description'] ?? "" !!}<br>
+                                                <b>Description</b> : !! $row['hindi']['description'] ?? "" !!}<br>
+                                                <b>Summary</b> : {!! $row['hindi']['summary'] ?? "" !!}<br>
                                                 <b>Audio</b> : <br>@if (isset($row['hindi']['audio']))
                                                 <audio controls="controls">
-                                                    <source src="{{ asset('storage/slocks/' . $row['hindi']['audio']) }}" type="audio/mp4" />
+                                                    <source src="{{ asset($row['hindi']['audio']) }}" type="audio/mp4" />
                                                 </audio>
                                                 @endif
                                             </div>
@@ -175,11 +175,11 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <b>Short Description</b> : {{ $row['english']['short_description'] ?? "" }}<br>
-                                                <b>Description</b> : {{ $row['english']['description'] ?? "" }}<br>
-                                                <b>Summary</b> : {{ $row['english']['summary'] ?? "" }}<br>
+                                                <b>Short Description</b> : {!! $row['english']['short_description'] ?? "" !!}<br>
+                                                <b>Description</b> : {!! $row['english']['description'] ?? "" !!}<br>
+                                                <b>Summary</b> : {!! $row['english']['summary'] ?? "" !!}<br>
                                                 <b>Audio</b> : <br>@if (isset($row['english']['audio'])) <audio controls="controls">
-                                                    <source src="{{ asset('storage/slocks/' . $row['english']['audio']) }}" type="audio/mp4" />
+                                                    <source src="{{ asset($row['english']['audio']) }}" type="audio/mp4" />
                                                 </audio>
                                                 @endif
                                             </div>
@@ -197,12 +197,12 @@
                             </td>
                             <td>
                                 <div class="d-flex flex-row">
-                                    <a href="{{ route('slocks.edit', $row['id']) }}" title="Edit"
+                                    <a href="{{ route('shloks.edit', $row['id']) }}" title="Edit"
                                         class="btn btn-info me-1">
                                         <i class="fa-regular fa-pen-to-square"></i>
                                     </a>
                                     <a href="javascript:void(0)" title="Delete"
-                                        data-url="{{ route('slocks.delete', $row['id']) }}"
+                                        data-url="{{ route('shloks.delete', $row['id']) }}"
                                         class="btn btn-danger deleteItem">
                                         <i class="fa-solid fa-trash-can"></i>
                                     </a>
@@ -227,15 +227,15 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">{{ isset($editdata) ? 'Edit' : 'Add' }} Slock</h4>
+                <h4 class="modal-title">{{ isset($editdata) ? 'Edit' : 'Add' }} Shlok</h4>
                 <button type="button" class="btn-close" aria-label="Close" @if (isset($editdata))
-                    onclick="window.location.href=`{{ route('slocks') }}`" @else data-bs-dismiss="modal"
+                    onclick="window.location.href=`{{ route('shloks') }}`" @else data-bs-dismiss="modal"
                     @endif></button>
             </div>
             <div class="card">
                 <div class="card-body">
                     <form method="POST" enctype="multipart/form-data" id="validationform"
-                        action="{{ isset($editdata) ? route('slocks.edit', $editdata['id']) : route('slocks.add') }}">
+                        action="{{ isset($editdata) ? route('shloks.edit', $editdata['id']) : route('shloks.add') }}">
                         @csrf
                         @if (isset($editdata))
                         @method('PATCH')
@@ -272,9 +272,9 @@
 
                             <div class="col-md-12 col-12">
                                 <div class="mb-1">
-                                    <label class="form-label" for="slock">Slock</label>
-                                    <textarea name="slock" id="slock" placeholder="Enter Slock" class="form-control">{{ isset($editdata) ? $editdata['slock'] : '' }}</textarea>
-                                    <p class="text-danger">{{ $errors->first('slock') }}</p>
+                                    <label class="form-label" for="shlok">Shlok</label>
+                                    <textarea name="shlok" id="shlok" placeholder="Enter Shlok" class="form-control">{{ isset($editdata) ? $editdata['shlok'] : '' }}</textarea>
+                                    <p class="text-danger">{{ $errors->first('shlok') }}</p>
                                 </div>
                             </div>
 
@@ -319,7 +319,7 @@
                                     <audio controls="controls" id="gujarati_preview" @if (!isset($editdata) || empty($editdata['audio']))
                                         style="display:none"
                                         @endif>
-                                        <source src="{{ isset($editdata) ? asset('storage/slocks/' . $editdata['audio']) : '' }}" type="audio/mp4" />
+                                        <source src="{{ isset($editdata) ? asset($editdata['audio']) : '' }}" type="audio/mp4" />
                                     </audio>
                                 </div>
                             </div>
@@ -365,7 +365,7 @@
                                     <audio controls="controls" id="hindi_preview" @if (!isset($editdata) || empty($editdata['hindi']['audio']))
                                         style="display:none"
                                         @endif>
-                                        <source src="{{ isset($editdata) ? asset('storage/slocks/' . ($editdata['hindi']['audio'] ?? '')) : '' }}" type="audio/mp4" />
+                                        <source src="{{ isset($editdata) ? asset(($editdata['hindi']['audio'] ?? '')) : '' }}" type="audio/mp4" />
                                     </audio>
                                 </div>
                             </div>
@@ -411,7 +411,7 @@
                                     <audio controls="controls" id="english_preview" @if (!isset($editdata) || empty($editdata['english']['audio']))
                                         style="display:none"
                                         @endif>
-                                        <source src="{{ isset($editdata) ? asset('storage/slocks/' . ($editdata['english']['audio'] ?? '')) : '' }}" type="audio/mp4" />
+                                        <source src="{{ isset($editdata) ? asset(($editdata['english']['audio'] ?? '')) : '' }}" type="audio/mp4" />
                                     </audio>
                                 </div>
                             </div>
@@ -471,7 +471,7 @@
 
                         <div class="col-12">
                             <button type="button" class="btn btn-flat-secondary waves-effect" aria-label="Close"
-                                @if(isset($editdata)) onclick="window.location.href=`{{ route('slocks') }}`" @else
+                                @if(isset($editdata)) onclick="window.location.href=`{{ route('shloks') }}`" @else
                                 data-bs-dismiss="modal" @endif>Close</button>
                             @if (isset($editdata))
                             <button type="submit" class="btn btn-primary float-end">Update</button>
@@ -524,7 +524,7 @@
     $("#modalbutton").click();
 
     $('#addItemModal').on('hidden.bs.modal', function() {
-        window.location.href = "{{ route('slocks') }}";
+        window.location.href = "{{ route('shloks') }}";
     })
 </script>
 @endif
@@ -608,7 +608,7 @@
                 }
             }
         });
-        $('div.head-label').html('<h6 class="mb-0">Slocks</h6>');
+        $('div.head-label').html('<h6 class="mb-0">Shloks</h6>');
     }
 
     $(function() {
@@ -622,7 +622,7 @@
                 division_id: {
                     required: true,
                 },
-                slock: {
+                shlok: {
                     required: true,
                 },
                 gujarati_short_description: {
@@ -646,6 +646,17 @@
                 },
             }
         });
+
+        Jodit.make('#shlok');
+        Jodit.make('#gujarati_short_description');
+        Jodit.make('#gujarati_description');
+        Jodit.make('#gujarati_summary');
+        Jodit.make('#hindi_short_description');
+        Jodit.make('#hindi_description');
+        Jodit.make('#hindi_summary');
+        Jodit.make('#english_short_description');
+        Jodit.make('#english_description');
+        Jodit.make('#english_summary');
 
         $(".datatables-basic").on('click', ".deleteItem", function() {
             let route = $(this).data('url');
@@ -684,7 +695,7 @@
 
     function changeStatus(id) {
         $.ajax({
-            url: "{{ route('slocks.change-status') }}",
+            url: "{{ route('shloks.change-status') }}",
             type: "POST",
             data: {
                 '_token': '{{ csrf_token() }}',

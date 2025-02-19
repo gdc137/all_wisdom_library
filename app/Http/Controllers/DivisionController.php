@@ -11,8 +11,17 @@ use Intervention\Image\Laravel\Facades\Image;
 
 class DivisionController extends Controller
 {
-    public function index() {
-        return view('user.divisions');
+    public function index($id, $slug)
+    {
+        $data = Scripture::where('id', $id)->where('active_status', 1)->where('delete_status', 0)->where('visible_at', '<=', date('Y-m-d H:i:s'))->first();
+        if ($data == null) {
+            return abort(404);
+        }
+        
+        $scripture = Scripture::find($id)->toArray();
+        $divisions = Division::where('scripture_id', $id)->where('active_status', 1)->where('delete_status', 0)->where('visible_at', '<=', date('Y-m-d H:i:s'))->orderBy('visible_at')->get()->toArray();
+
+        return view('user.divisions', ['scripture' => $scripture, 'divisions' => $divisions]);
     }
 
     // admin
@@ -51,6 +60,8 @@ class DivisionController extends Controller
             $image_path = public_path('uploads/divisions/');
 
             Image::read($request->file('image'))->resize(1200, 800)->save($image_path . $image_name);
+
+            $image_name = 'uploads/divisions/' . $image_name;
         }
 
         Division::create([
@@ -97,7 +108,7 @@ class DivisionController extends Controller
                 !empty($row->image) ? unlink($image_path . $row->image) : '';
 
                 Image::read($request->file('image'))->resize(1200, 800)->save($image_path . $image_name);
-                $row->image = $image_name;
+                $row->image = 'uploads/divisions/' . $image_name;
             }
 
             $row->visible_at = date('Y-m-d H:i:s', strtotime($request->visible_at . " 06:00:00"));
