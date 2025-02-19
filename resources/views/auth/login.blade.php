@@ -89,7 +89,7 @@
                                     <div class="mb-1">
                                         <label class="form-label" for="email">Email</label>
                                         <input class="form-control" id="email" type="email" name="email"
-                                            placeholder="john@example.com" value="{{ old('email', 'girdharrathod786@gmail.com') }}"
+                                            placeholder="john@example.com" value="{{ old('email') }}"
                                             aria-describedby="login-email" autofocus="" tabindex="1" />
                                         <p class="text-danger">{{ $errors->first('email') }}</p>
                                     </div>
@@ -102,7 +102,6 @@
                                         <div class="input-group input-group-merge form-password-toggle">
                                             <input class="form-control form-control-merge" id="password"
                                                 type="password" name="password" placeholder="············"
-                                                value="test123test"
                                                 aria-describedby="password" tabindex="2"
                                                 autocomplete="new-password" /><span
                                                 class="input-group-text cursor-pointer"><i
