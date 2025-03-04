@@ -14,10 +14,21 @@
     }
 
     .wrappertext {
+        height: 3em;
+        /* Adjust based on your font sizes */
         overflow: hidden;
-        display: -webkit-box;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
+        position: relative;
+    }
+
+    .wrappertext::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        height: 1.5em;
+        /* Adjust to match the last line height */
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, white 100%);
     }
 </style>
 @endsection
@@ -30,10 +41,10 @@
 
 @section('content')
 <section>
-    <h2 style="text-decoration: underline;" class="text-center">{{ $division['title'] }}</h2>
+    <h2 style="text-decoration: underline;" class="text-center">{!! $division['title'] !!}</h2>
     <div class="row my-3">
         <div class="col-md-12">
-            <p>{!! $division['description'] !!}</p>
+            <p style="color: black !important;">{!! $division['description'] !!}</p>
         </div>
     </div>
     <hr>
@@ -57,8 +68,7 @@
                     <tr>
                         <td>{{ $i }}</td>
                         <td>{!! $row['shlok'] !!}
-                            <br><br>
-                            <p class="wrappertext">{!! $row['short_description'] !!}</p>
+                            <div class="wrappertext">{!! $row['short_description'] !!}</div>
                         </td>
                         <td><a href="{{ route('u-shlok', [$row['id'], $row['meta_slug'] ?? 'shloks']) }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="green" class="bi bi-arrow-right-square" viewBox="0 0 16 16">

@@ -5,6 +5,26 @@
 @section('head')
 <meta name="description" content="Scriptures with audio. We aim to help individuals connect with spiritual wisdom through organized scriptures, study tools, and insightful resources. Whether you're seeking daily inspiration, in-depth study, or a place to reflect, we are here to guide your journey with faith and understanding.">
 <meta name="keywords" content="gita, mahabharat, scriptures, hindi, gujarati, bhagavat">
+
+<style>
+    .wrappertext {
+        height: 6em;
+        /* Adjust based on your font sizes */
+        overflow: hidden;
+        position: relative;
+    }
+
+    .wrappertext::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        height: 1.5em;
+        /* Adjust to match the last line height */
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, white 100%);
+    }
+</style>
 @endsection
 
 @section('slider')
@@ -22,7 +42,7 @@
         @foreach ($scriptures as $row)
         <a href="{{ route('u-divisions', [$row['id'], $row['meta-slug'] ?? 'scripture']) }}" class="feature-post-item">
             <img src="{{ empty($row['image']) ? asset('uploads/noimg.jpg') : asset($row['image']) }}" class="w-100" alt="">
-            <div class="feature-post-caption">{{ $row['title'] }}</div>
+            <div class="feature-post-caption">{!! $row['title'] !!}</div>
         </a>
         @endforeach
         <a href="javascript: void(0)" class="feature-post-item">
@@ -48,15 +68,15 @@
     <div class="page-content">
         <div class="card">
             <div class="card-header text-center">
-                <h5 class="card-title">{{ $headshlok['title'] }}</h5>
-                <h4 class="card-title">{!! $headshlok['shlok'] !!}</h4>
-                <small class="small text-muted">{!! $headshlok['short_description'] !!}</small>
+                <div style="color: black !important;">{!! $headshlok['title'] !!}</div>
+                <div style="color: black !important;">{!! $headshlok['shlok'] !!}</div>
+                <div style="color: black !important;">{!! $headshlok['short_description'] !!}</div>
             </div>
             <div class="card-body">
                 <div class="blog-media">
                     <img src="{{ empty($headshlok['image']) ? asset('uploads/noimg.jpg') : asset($headshlok['image']) }}" alt="" class="w-100">
                 </div>
-                <p class="my-3">{!! $headshlok['description'] !!}</p>
+                <div class="my-3 wrappertext" style="color: black !important;">{!! $headshlok['description'] !!}</div>
             </div>
 
             <div class="card-footer d-flex justify-content-between align-items-center flex-basis-0">
@@ -74,10 +94,10 @@
                         </div>
                     </div>
                     <div class="card-body px-0">
-                        <h5 class="card-title">{{ $row['title'] }}</h5>
-                        <h4 class="card-title">{!! $row['shlok'] !!}</h4>
-                        <small class="small text-muted">{!! $headshlok['short_description'] !!}</small>
-                        <p class="my-2">{!! $row['description'] !!}</p>
+                        <div style="color: black !important;">{!! $row['title'] !!}</div>
+                        <div style="color: black !important;">{!! $row['shlok'] !!}</div>
+                        <div style="color: black !important;">{!! $row['short_description'] !!}</div>
+                        <div class="my-2 wrappertext" style="color: black !important;">{!! $row['description'] !!}</div>
                     </div>
 
                     <div class="card-footer p-0 text-center">
@@ -92,8 +112,8 @@
     </div>
 
     <!-- Sidebar -->
-    <div class="page-sidebar text-center">
-        <h6 class="sidebar-title section-title mb-4 mt-3">About</h6>
+    <div class="page-sidebar text-left">
+        <!-- <h6 class="sidebar-title section-title mb-4 mt-3">About</h6> -->
         <!-- <img src="{{ asset('user-assets/imgs/avatar.jpg') }}" alt="" class="circle-100 mb-3"> -->
         <!-- <div class="socials mb-3 mt-2">
                     <a href="javascript:void(0)"><i class="ti-facebook"></i></a>
@@ -102,8 +122,18 @@
                     <a href="javascript:void(0)"><i class="ti-instagram"></i></a>
                     <a href="javascript:void(0)"><i class="ti-youtube"></i></a>
                 </div> -->
-        <p><b>અમારું કાર્ય</b><br>
-            અમે શાશ્વત શાસ્ત્રોને જીવનમાં લાવવાનું અમારું ધ્યેય છે અને તેના માટે એક વ્યાપક અને સરળપણે ઉપલબ્ધ પ્લેટફોર્મ પ્રદાન કરીએ છીએ. આપણા માધ્યમથી, લોકો આયુષ્યમય શાસ્ત્રોની શોધ, અધ્યયન અને પ્રેરણામાં સહાય મેળવી શકે છે. તમે દૈનિક પ્રેરણા શોધી રહ્યા હોવ કે ઊંડો અભ્યાસ કરવા માંગતા હોવ, કે પછી આદરપૂર્વક ચિંતન માટે એક સ્થળ જોઈ રહ્યા હોવ, અમે તમને વિશ્વાસ અને સમજૂતી સાથે માર્ગદર્શન આપવા માટે અહીં છીએ.</p>
+        <h3 class="sidebar-title section-title mb-4 mt-3 text-center">અમારા વિશે</h3>
+        <p>અમે પવિત્ર શાસ્ત્રોને સહેલાઈથી ઉપલબ્ધ, સમજવા યોગ્ય અને અર્થસભર બનાવવાના સંકલ્પ સાથે કાર્ય કરી રહ્યા છીએ. અમારી વેબસાઈટ એ એક આદ્યાત્મિક કેન્દ્ર છે જ્યાં વ્યક્તિઓ દૈવિક જ્ઞાન શોધી શકે, આત્મિક માર્ગદર્શન મેળવી શકે અને તેમના વિશ્વાસને વધુ ઘેરો બનાવી શકે.</p>
+        <h6><b>અમારું ધ્યેય</b></h6>
+        <p>અમારું મુખ્ય ઉદ્દેશ્ય એક સુસંગત અને સમૃદ્ધ પ્લેટફોર્મ પ્રદાન કરવાનું છે, જ્યાં લોકો પવિત્ર શાસ્ત્રો સાથે જોડાઈ શકે, પ્રશ્નોના ઉત્તર મેળવી શકે અને પ્રાચીન જ્ઞાનમાંથી ઉપયોગી શિક્ષણ મેળવી શકે. અમે એક એવું પર્યાવરણ બનાવવા માંગીએ છીએ, જ્યાં દરેક પૃષ્ઠભૂમિના લોકો પવિત્ર ગ્રંથો સાથે જોડાઈ શકે અને તેમને સરળ અને ઉંડાણપૂર્વક સમજી શકે.</p>
+        <h6><b>અમે શું પ્રદાન કરીએ છીએ?</b></h6>
+        <ul>
+            <li><b>વ્યાપક શાસ્ત્ર લાઈબ્રેરી</b> – વિવિધ પુસ્તકો, અધ્યાયો અને વિષયો અનુસાર શ્રેણીબદ્ધ શાસ્ત્રો સરળ શોધ માટે ઉપલબ્ધ.</li>
+            <li><b>દૈનિક પ્રેરણા</b> – રોજિંદી જીવન માટે સંદેશ આપવા માટે દૈનિક એક શાસ્ત્રવાણી.</li>
+            <li><b>અભ્યાસ સાધનો અને ટીકા</b> – ઊંડાણપૂર્વકની સમજ માટે ટિપ્પણીઓ, વિશ્લેષણ અને સંદર્ભો.</li>
+            <li><b>સર્ચ અને નેવિગેશન</b> – વિષય, કીવર્ડ અથવા શબ્દસમૂહના આધારે ઝડપી અને સરળ શોધ સુવિધા.</li>
+            <li><b>સામુહિક ચર્ચા</b> – સમાન વિચારો ધરાવતા લોકો સાથે શાસ્ત્રોની ચર્ચા, અનુભવ અને અભિપ્રાય વહેંચવાની તક.</li>
+        </ul>
 
         <!-- <div class="ad-card d-flex text-center align-items-center justify-content-center">
             <span href="#" class="font-weight-bold">ADS</span>

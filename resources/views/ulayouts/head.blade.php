@@ -1,5 +1,6 @@
 <meta name="author" content="One-Enegry">
-
+<link rel="apple-touch-icon" href="{{ asset('app-assets/images/logo/favicon.png') }}">
+<link rel="shortcut icon" type="image/x-icon" href="{{ asset('app-assets/images/logo/favicon.png') }}">
 <!-- font icons -->
 <link rel="stylesheet" href="{{ asset('user-assets/vendors/themify-icons/css/themify-icons.css') }}">
 <!-- Bootstrap + HappyToHelp main styles -->

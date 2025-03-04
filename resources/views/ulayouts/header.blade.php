@@ -36,9 +36,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('contact-us') }}">Contact Us</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('u-shlok', ['id', 'name']) }}">Single Post</a>
-                </li>
             </ul>
             <div class="navbar-nav ml-auto">
                 <li class="nav-item today">

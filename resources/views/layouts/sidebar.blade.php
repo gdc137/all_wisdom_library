@@ -48,12 +48,19 @@
                     <span class="menu-title text-truncate" data-i18n="home">Scriptures</span>
                 </a>
             </li>
-            
+
             <!-- <li class="nav-item {{ strpos(Route::currentRouteName(), 'languages') === 0 ? 'active' : '' }}">
                 <a class="d-flex align-items-center" href="{{ route('languages') }}">
                     <i class="fa-solid fa-language"></i>
                     <span class="menu-title text-truncate" data-i18n="home">Languages</span>
-                </a> -->
+                </a>
+            </li> -->
+
+            <li class="nav-item {{ strpos(Route::currentRouteName(), 'contacts') === 0 ? 'active' : '' }}">
+                <a class="d-flex align-items-center" href="{{ route('contacts') }}">
+                    <i class="fa-solid fa-language"></i>
+                    <span class="menu-title text-truncate" data-i18n="book">Contacts</span>
+                </a>
             </li>
         </ul>
     </div>

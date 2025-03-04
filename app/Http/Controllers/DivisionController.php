@@ -105,7 +105,7 @@ class DivisionController extends Controller
                 $image_name = uniqid() . time() . '.' . $request->image->getClientOriginalExtension();
                 $image_path = public_path('uploads/divisions/');
 
-                !empty($row->image) ? unlink($image_path . $row->image) : '';
+                !empty($row->image) ? unlink($row->image) : '';
 
                 Image::read($request->file('image'))->resize(1200, 800)->save($image_path . $image_name);
                 $row->image = 'uploads/divisions/' . $image_name;

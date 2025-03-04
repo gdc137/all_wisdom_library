@@ -15,15 +15,17 @@ class HomeController extends Controller
     public function home()
     {
         $scriptures = Scripture::where('delete_status', 0)->where('active_status', 1)->where('visible_at', '<=', date('Y-m-d H:i:s'))->get()->toArray();
-        $headshlok = Shlok::join('divisions', 'divisions.id', 'shloks.division_id')->where('shloks.active_status', 1)->where('shloks.id', 1)->where('shloks.visible_at', '<=', date('Y-m-d H:i:s'))->get(['divisions.title', 'divisions.image', 'shloks.*'])->first()->toArray();
+        $heads = Shlok::join('divisions', 'divisions.id', 'shloks.division_id')->where('shloks.active_status', 1)->where('shloks.id', 1)->where('shloks.visible_at', '<=', date('Y-m-d H:i:s'))->get(['divisions.title', 'divisions.image', 'shloks.*'])->first();
+        $headshlok = $heads ? $heads->toArray() : [];
         $displayshloks = Shlok::join('divisions', 'divisions.id', 'shloks.division_id')->where('shloks.active_status', 1)->where('lang_id', 1)->where('shloks.visible_at', '<=', date('Y-m-d H:i:s'))->orderBy('id')->offset(2)->limit(5)->get(['divisions.title', 'divisions.image', 'shloks.*'])->toArray();
+
         return view('user.home', ['scriptures' => $scriptures, 'headshlok' => $headshlok, 'displayshloks' => $displayshloks]);
     }
 
     public function today()
     {
         $shlok = Shlok::where('active_status', 1)->where('lang_id', 1)->where('visible_at', '<=', date('Y-m-d H:i:s'))->orderBy('id', 'DESC')->first()->toArray();
-        
+
         return redirect()->route('u-shlok', [$shlok['id'], $shlok['meta_slug'] ?? 'shlok']);
     }
 
@@ -68,10 +70,15 @@ class HomeController extends Controller
     //admin
     public function index()
     {
-        $scriptures = Scripture::count();
-        $divisions = Division::count();
-        $shloks = Shlok::count();
+        $scriptures = Scripture::where('delete_status', 0)->count();
+        $divisions = Division::where('delete_status', 0)->count();
+        $shloks = Shlok::where('ref_id', null)->count();
         return view('dashboard', ['scripture_count' => $scriptures, 'division_count' => $divisions, 'shlok_count' => $shloks]);
+    }
+
+    public function contacts() {
+        $contacts = Contact::whereNot('id', null)->get()->toArray();
+        return view('contact', ['data' => $contacts]);
     }
 
     // file proccess

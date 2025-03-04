@@ -7,10 +7,21 @@
 <meta name="keywords" content="{{ $shlok['meta_keywords'] }}">
 <style>
     .wrappertext {
+        height: 4em;
+        /* Adjust based on your font sizes */
         overflow: hidden;
-        display: -webkit-box;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
+        position: relative;
+    }
+
+    .wrappertext::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        height: 1.5em;
+        /* Adjust to match the last line height */
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, white 100%);
     }
 </style>
 @endsection
@@ -29,7 +40,7 @@
                 <div class="card-header pt-0">
                     <div class="row">
                         <div class="col-md-8">
-                            <h4 class="card-title mb-4">{!! $shlok['shlok'] !!}</h4>
+                            <h4 class="card-title mb-4" style="color: black !important;">{!! $shlok['shlok'] !!}</h4>
                         </div>
                         <div class="col-md-4 text-center">
                             <button class="lang btn btn-primary text-white rounded" data-name="guj">ગુજરાતી</button>
@@ -50,16 +61,17 @@
                         </audio>
                         @endif
                     </div>
-                    <b>અનુવાદ</b>:
-                    {!! $shlok['short_description'] !!}
+                    <h4><b>અનુવાદ</b>:</h4>
+                    <div style="color: black !important;">{!! $shlok['short_description'] !!}</div>
 
                     <br>
-                    <b>અંતર્જ્ઞાન</b>:
-                    {!! $shlok['description'] !!}
+                    <h4><b>અંતર્જ્ઞાન</b>:</h4>
+                    <div style="color: black !important;">{!! $shlok['description'] !!}</div>
 
                     <br>
-                    <b>સારાંશ</b>:
-                    {!! $shlok['summary'] !!}
+                    <h4><b>સારાંશ</b>:</h4>
+                    <div style="color: black !important;">{!! $shlok['summary'] !!}</div>
+                    
                 </div>
 
                 @if (count($shlok['hindi']) > 0)
@@ -71,16 +83,16 @@
                         </audio>
                         @endif
                     </div>
-                    <b>अनुवाद</b>:
-                    {!! $shlok['hindi']['short_description'] !!}
+                    <h4><b>अनुवाद</b>:</h4>
+                    <div style="color: black !important;">{!! $shlok['hindi']['short_description'] !!}</div>
 
                     <br>
-                    <b>अंतर्ज्ञान</b>:
-                    {!! $shlok['hindi']['description'] !!}
+                    <h4><b>अंतर्ज्ञान</b>:</h4>
+                    <div style="color: black !important;">{!! $shlok['hindi']['description'] !!}</div>
 
                     <br>
-                    <b>सारांश</b>:
-                    {!! $shlok['hindi']['summary'] !!}
+                    <h4><b>सारांश</b>:</h4>
+                    <div style="color: black !important;">{!! $shlok['hindi']['summary'] !!}</div>
                 </div>
                 @endif
 
@@ -93,16 +105,16 @@
                         </audio>
                         @endif
                     </div>
-                    <b>Translation</b>:
-                    {!! $shlok['english']['short_description'] !!}
+                    <h4><b>Translation</b>:</h4>
+                    <div style="color: black !important;">{!! $shlok['english']['short_description'] !!}</div>
 
                     <br>
-                    <b>Intuition</b>:
-                    {!! $shlok['english']['description'] !!}
+                    <h4><b>Intuition</b>:</h4>
+                    <div style="color: black !important;">{!! $shlok['english']['description'] !!}</div>
 
                     <br>
-                    <b>Summary</b>:
-                    {!! $shlok['english']['summary'] !!}
+                    <h4><b>Summary</b>:</h4>
+                    <div style="color: black !important;">{!! $shlok['english']['summary'] !!}</div>
                 </div>
                 @endif
             </div>

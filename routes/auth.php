@@ -73,4 +73,7 @@ Route::middleware('auth')->prefix('_admin')->group(function () {
     Route::patch('/shloks/{id}/edit', [ShlokController::class, 'edit'])->name('shloks.edit');
     Route::delete('/shloks/{id}/delete', [ShlokController::class, 'delete'])->name('shloks.delete');
     Route::post('/shloks/change-status', [ShlokController::class, 'changeStatus'])->name('shloks.change-status');
+
+    // contacts
+    Route::get('/contacts', [HomeController::class, 'contacts'])->name('contacts');
 });
