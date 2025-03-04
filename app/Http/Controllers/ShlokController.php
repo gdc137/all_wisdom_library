@@ -98,7 +98,7 @@ class ShlokController extends Controller
             'shlok' => ['required'],
             'gujarati_short_description' => ['required'],
             'gujarati_description' => ['required'],
-            'gujarati_audio' => ['file', 'max:2048'],
+            'gujarati_audio' => ['file', 'max:20480'],
             'visible_at' => ['required', 'date'],
         ]);
 

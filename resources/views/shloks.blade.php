@@ -632,13 +632,13 @@
                     required: true,
                 },
                 gujarati_audio: {
-                    fileSizeLimit: 2048000,
+                    fileSizeLimit: 20480000,
                 },
                 hindi_audio: {
-                    fileSizeLimit: 2048000,
+                    fileSizeLimit: 20480000,
                 },
                 english_audio: {
-                    fileSizeLimit: 2048000,
+                    fileSizeLimit: 20480000,
                 },
                 visible_at: {
                     required: true,
